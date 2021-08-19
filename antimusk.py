@@ -45,6 +45,7 @@ async def search(client, message):
                     "Date: {}\n".format(datetime.now().strftime("%d.%m.%Y %H:%M:%S")) +
                     f"Match: {word}\n"
                     f"UUID: {request_uuid}\n"
+                    f"Chat: {message.chat.id} ({message.chat.username})\n"
                     "=== Tesseract data ===\n" +
                     tessract_data +
                     "\n======================\n\n\n\n"
