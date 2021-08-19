@@ -50,8 +50,10 @@ async def search(client, message):
                     "\n======================\n\n\n\n"
                 )
 
-            break
+            im.close()
+            return
 
     im.close()
+    os.remove(target)
 
 app.run()
