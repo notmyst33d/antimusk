@@ -25,9 +25,12 @@ async def search(client, message):
     request_uuid = str(uuid.uuid4())
     target = "data/" + request_uuid + ".jpg"
 
-    await message.download(target)
-
-    im = Image.open(target)
+    while True:
+        try:
+            await message.download(target)
+            im = Image.open(target)
+            break
+        except: pass
 
     tessract_data = pytesseract.image_to_string(im).lower()
 
