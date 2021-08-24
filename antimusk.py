@@ -25,12 +25,25 @@ async def search(client, message):
     request_uuid = str(uuid.uuid4())
     target = "data/" + request_uuid + ".jpg"
 
+    tries = 0
     while True:
         try:
             await message.download(target)
             im = Image.open(target)
             break
-        except: pass
+        except:
+            print(f"[{request_uuid}] Download failed, retrying...")
+
+            message = await app.get_messages(message.chat.id, message.message_id)
+            if message.empty:
+                print(f"[{request_uuid}] Message was removed before the bot had a chance to download it, thats weird...")
+                return
+
+            tries += 1
+
+            if tries == 5:
+                print(f"[{request_uuid}] Reached retry limit")
+                return
 
     tessract_data = pytesseract.image_to_string(im).lower()
 
