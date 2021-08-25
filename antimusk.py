@@ -28,13 +28,13 @@ async def search(client, message):
     tries = 0
     while True:
         try:
-            await message.download(target)
+            await client.download_media(message.photo, file_name=target)
             im = Image.open(target)
             break
         except:
             print(f"[{request_uuid}] Download failed, retrying...")
 
-            message = await app.get_messages(message.chat.id, message.message_id)
+            message = await client.get_messages(message.chat.id, message.message_id)
             if message.empty:
                 print(f"[{request_uuid}] Message was removed before the bot had a chance to download it, thats weird...")
                 return
