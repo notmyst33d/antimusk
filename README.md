@@ -1,5 +1,9 @@
-# antimusk
+# AntiMusk
 Simple bot for deleting crypto scam messages
+
+## How it works
+It uses Tesseract OCR to scan photos for blocked words, its primarily used to detect and delete photos like this:
+<img src="https://i.imgur.com/dRxf1RU.jpg" width="400">
 
 ## Installing
 1. `git clone https://github.com/notmyst33d/antimusk`
