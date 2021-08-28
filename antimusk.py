@@ -31,7 +31,7 @@ async def check_authorized_filter(_, client, message):
         return True
 
 async def check_not_whitelisted_filter(_, client, message):
-    if str(message.from_user.id) not in config["chats"].get(str(message.chat.id), empty_chat_data)["whitelist"] or message.from_user.username not in config["chats"].get(str(message.chat.id), empty_chat_data)["whitelist"]:
+    if str(message.from_user.id) not in config["chats"].get(str(message.chat.id), empty_chat_data)["whitelist"]:
         return True
 
 async def check_not_edited_filter(_, client, message):
