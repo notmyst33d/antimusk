@@ -2,3 +2,4 @@
 *.session-journal
 log.txt
 data
+config.json

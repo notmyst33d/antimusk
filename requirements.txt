@@ -1,3 +1,4 @@
 pytesseract
 pyrogram
+tgcrypto
 Pillow

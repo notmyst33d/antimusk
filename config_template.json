@@ -1,0 +1,7 @@
+{
+    "api_id": "Your API ID here",
+    "api_hash": "Your API hash here",
+    "bot_token": "Your bot token here",
+    "authorized_users": ["Your username or ID: ", 123456789],
+    "chats": {}
+}
