@@ -123,6 +123,8 @@ async def ocr_search(client, message):
 
 @app.on_message(check_authorized & check_not_edited & filters.command(["reload", f"reload@{me.username}"]))
 async def reload(client, message):
+    global config
+
     with open("config.json", "r") as f:
         config = json.loads(f.read())
 
