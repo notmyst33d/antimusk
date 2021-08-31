@@ -27,12 +27,14 @@ async def check_protected_filter(_, client, message):
         return True
 
 async def check_authorized_filter(_, client, message):
-    if message.from_user.id in config["authorized_users"] or message.from_user.username in config["authorized_users"]:
-        return True
+    if message.from_user:
+        if message.from_user.id in config["authorized_users"] or message.from_user.username in config["authorized_users"]:
+            return True
 
 async def check_not_whitelisted_filter(_, client, message):
-    if str(message.from_user.id) not in config["chats"].get(str(message.chat.id), empty_chat_data)["whitelist"]:
-        return True
+    if message.from_user:
+        if str(message.from_user.id) not in config["chats"].get(str(message.chat.id), empty_chat_data)["whitelist"]:
+            return True
 
 async def check_not_edited_filter(_, client, message):
     if not message.edit_date:
