@@ -99,26 +99,16 @@ async def ocr_search(client, message):
 
     for word in config["chats"][str(message.chat.id)]["blocked_words"]:
         if word in tessract_data_split:
-            await message.reply(f"Found blocked word: `{word}`\nRequest UUID: {request_uuid}")
+            if not config["chats"][str(message.chat.id)].get("silentmode", False):
+                await message.reply(f"Found blocked word: `{word}`\nRequest UUID: {request_uuid}")
 
             try:
                 await message.delete()
             except:
-                await message.reply("Unfortunately i cant delete this message for some reason")
+                if not config["chats"][str(message.chat.id)].get("silentmode", False):
+                    await message.reply("Unfortunately i cant delete this message for some reason")
 
-            with open("log.txt", "a") as f:
-                f.write(
-                    "Date: {}\n".format(datetime.now().strftime("%d.%m.%Y %H:%M:%S")) +
-                    f"Match: {word}\n"
-                    f"UUID: {request_uuid}\n"
-                    f"Chat: {message.chat.id} ({message.chat.username})\n"
-                    "=== Tesseract data ===\n" +
-                    tessract_data +
-                    "\n======================\n\n\n\n"
-                )
-
-            im.close()
-            return
+            break
 
     im.close()
     os.remove(target)
@@ -319,6 +309,29 @@ async def clearwhitelist(client, message):
     dump_config()
 
     await message.reply("Whitelist cleared")
+
+@app.on_message(check_not_edited & filters.command(["silentmode", f"silentmode@{me.username}"]))
+async def silentmode(client, message):
+    if await unprotected_chat(message) or await not_admin(client, message): return
+
+    args = message.text.split(" ")
+
+    if len(args) < 2:
+        config["chats"][str(message.chat.id)]["silentmode"] = not config["chats"][str(message.chat.id)].get("silentmode", False)
+    else:
+        if args[1].lower() == "on":
+            config["chats"][str(message.chat.id)]["silentmode"] = True
+        elif args[1].lower() == "off":
+            config["chats"][str(message.chat.id)]["silentmode"] = False
+        else:
+            return await message.reply(f"Unknown value \"{args[1]}\", please choose on/off")
+
+    dump_config()
+
+    if config["chats"][str(message.chat.id)]["silentmode"] == True:
+        await message.reply("Silent mode: on")
+    else:
+        await message.reply("Silent mode: off")
 
 print("AntiMusk started")
 idle()
