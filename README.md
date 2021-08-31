@@ -34,4 +34,5 @@ All commands only respond to chat admins, except for `/start`, `/protect`, `/unp
 /listwhitelist - Get a list of whitelisted users
 /clearblockedwords - Clear a list of blocked words
 /clearwhitelist - Clear a list of whitelisted users
+/silentmode - Toggle silent mode
 ```
