@@ -103,7 +103,7 @@ async def ocr_search(client, message):
     for word in config["chats"][str(message.chat.id)]["blocked_words"]:
         if word in filtered_output:
             if not config["chats"][str(message.chat.id)].get("silentmode", False):
-                await message.reply(f"Found blocked word: `{word}`\nRequest UUID: {request_uuid}")
+                await message.reply(f"Found blocked word: `{word}`")
 
             try:
                 await message.delete()
