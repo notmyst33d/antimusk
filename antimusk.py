@@ -95,10 +95,13 @@ async def ocr_search(client, message):
     im = Image.open(target)
 
     tessract_data = pytesseract.image_to_string(im).lower()
-    tessract_data_split = tessract_data.split(" ")
+    filtered_output = []
+
+    for data_entry in tessract_data.split(" "):
+        filtered_output.extend(data_entry.split("\n"))
 
     for word in config["chats"][str(message.chat.id)]["blocked_words"]:
-        if word in tessract_data_split:
+        if word in filtered_output:
             if not config["chats"][str(message.chat.id)].get("silentmode", False):
                 await message.reply(f"Found blocked word: `{word}`\nRequest UUID: {request_uuid}")
 
